@@ -13,18 +13,17 @@ public class ProducerService {
 	private String topic;
 	
 	@Autowired
-	private KafkaTemplate<Long, ObjectProducer> kafkaTemplate;
+	private KafkaTemplate<String, ObjectProducer> kafkaTemplate;
 	
 	@Autowired
 	private KafkaTemplate<Long, String> kafkaTemplate1;
 	
 	public void send(ObjectProducer producer) {
 
-
-
 		//var record = new ProducerRecord<String, ObjectProducer>(topic, producer);
-
-		kafkaTemplate.send(topic, producer);
+		int charKey = producer.getName().charAt(0);
+		long key = charKey;
+		kafkaTemplate.send(topic, producer.getName().substring(0,1), producer);
 
 		//kafkaTemplate1.send(topic, producer.getName());
 	}
